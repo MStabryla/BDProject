@@ -1,0 +1,1 @@
+INSERT INTO `Przyjazd`(`kierunek`, `godzina`, `kolejność`, `id_linia`, `id_przyst`) VALUES (0,'09:00:00',1,1,24);

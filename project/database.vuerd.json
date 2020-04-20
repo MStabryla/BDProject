@@ -124,11 +124,11 @@
         "id": "c84928dd-a71a-454c-87e4-07c31debdcf0",
         "ui": {
           "active": false,
-          "top": 491,
-          "left": 57,
+          "top": 470,
+          "left": 47,
           "widthName": 60,
           "widthComment": 109,
-          "zIndex": 304
+          "zIndex": 307
         }
       },
       {
@@ -182,7 +182,7 @@
             }
           },
           {
-            "name": "NŻ",
+            "name": "NZ",
             "comment": "czy przystanek jest na żądanie",
             "dataType": "BOOL",
             "default": "0",
@@ -208,11 +208,11 @@
         "id": "a58b7428-1d7b-4ae4-b6dc-c549f54e6413",
         "ui": {
           "active": false,
-          "top": 522,
-          "left": 962,
+          "top": 502,
+          "left": 960,
           "widthName": 69,
           "widthComment": 147,
-          "zIndex": 302
+          "zIndex": 310
         }
       },
       {
@@ -360,7 +360,7 @@
         ],
         "id": "c363898b-971a-4f38-84ee-529e555517f1",
         "ui": {
-          "active": true,
+          "active": false,
           "top": 114,
           "left": 372,
           "widthName": 60,
@@ -369,375 +369,7 @@
         }
       }
     ],
-    "tableFocus": {
-      "focusName": false,
-      "focusComment": false,
-      "focusColumns": [
-        {
-          "selected": false,
-          "focusName": false,
-          "focusDataType": false,
-          "focusNotNull": false,
-          "focusDefault": false,
-          "focusComment": false,
-          "column": {
-            "name": "id",
-            "comment": "",
-            "dataType": "BIGINT",
-            "default": "",
-            "id": "f167adcb-9e20-4737-936c-6417b6ff8020",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": true,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": true,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          }
-        },
-        {
-          "selected": false,
-          "focusName": false,
-          "focusDataType": false,
-          "focusNotNull": false,
-          "focusDefault": false,
-          "focusComment": false,
-          "column": {
-            "name": "kierunek",
-            "comment": "jeśli 0 to przyjazd dotyczy jazdy do przystanku końcowego, a jeśli 1 to dotyczy jazdy do przystanku początkowego.",
-            "dataType": "BOOL",
-            "default": "0",
-            "id": "d2866474-8af1-4117-b6ef-95b2e98abe72",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 692,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          }
-        },
-        {
-          "selected": true,
-          "focusName": false,
-          "focusDataType": false,
-          "focusNotNull": false,
-          "focusDefault": false,
-          "focusComment": true,
-          "column": {
-            "name": "godzina",
-            "comment": "godzina przyjazdu.",
-            "dataType": "tim",
-            "default": "00:00:00",
-            "id": "b03f8538-5569-4105-b9f9-2040e932ee47",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 116,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          }
-        },
-        {
-          "selected": false,
-          "focusName": false,
-          "focusDataType": false,
-          "focusNotNull": false,
-          "focusDefault": false,
-          "focusComment": false,
-          "column": {
-            "name": "kolejność",
-            "comment": "wartość według której jest ukłądana kolejność przyjazdów na dane trasie. Przyjmuje wartości o 1 do n, gdzie n to ilość przystanków.",
-            "dataType": "SMALLINT",
-            "default": "1",
-            "id": "bb57abf0-421d-4dbc-9c8a-c3ba31384528",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 800,
-              "widthDataType": 64,
-              "widthDefault": 60
-            }
-          }
-        },
-        {
-          "selected": false,
-          "focusName": false,
-          "focusDataType": false,
-          "focusNotNull": false,
-          "focusDefault": false,
-          "focusComment": false,
-          "column": {
-            "name": "id_linia",
-            "comment": "id linii, której dotyczy przyjazd",
-            "dataType": "BIGINT",
-            "default": "",
-            "id": "f5de419d-48d7-419b-aa6b-390227272165",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 184,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          }
-        },
-        {
-          "selected": false,
-          "focusName": false,
-          "focusDataType": false,
-          "focusNotNull": false,
-          "focusDefault": false,
-          "focusComment": false,
-          "column": {
-            "name": "id_przyst",
-            "comment": "id przystanku, którego dotyczy przyjazd",
-            "dataType": "BIGINT",
-            "default": "",
-            "id": "49f9406f-cde0-46f5-8805-5426ad78a723",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 243,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          }
-        }
-      ],
-      "currentFocusTable": false,
-      "currentColumn": {
-        "name": "godzina",
-        "comment": "godzina przyjazdu.",
-        "dataType": "tim",
-        "default": "00:00:00",
-        "id": "b03f8538-5569-4105-b9f9-2040e932ee47",
-        "option": {
-          "autoIncrement": false,
-          "primaryKey": false,
-          "unique": false,
-          "notNull": true
-        },
-        "ui": {
-          "active": false,
-          "pk": false,
-          "fk": false,
-          "pfk": false,
-          "widthName": 60,
-          "widthComment": 116,
-          "widthDataType": 60,
-          "widthDefault": 60
-        }
-      },
-      "table": {
-        "name": "Przyjazd",
-        "comment": "Informacja o przyjeździe na przystanek",
-        "columns": [
-          {
-            "name": "id",
-            "comment": "",
-            "dataType": "BIGINT",
-            "default": "",
-            "id": "f167adcb-9e20-4737-936c-6417b6ff8020",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": true,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": true,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "name": "kierunek",
-            "comment": "jeśli 0 to przyjazd dotyczy jazdy do przystanku końcowego, a jeśli 1 to dotyczy jazdy do przystanku początkowego.",
-            "dataType": "BOOL",
-            "default": "0",
-            "id": "d2866474-8af1-4117-b6ef-95b2e98abe72",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 692,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "name": "godzina",
-            "comment": "godzina przyjazdu.",
-            "dataType": "tim",
-            "default": "00:00:00",
-            "id": "b03f8538-5569-4105-b9f9-2040e932ee47",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 116,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "name": "kolejność",
-            "comment": "wartość według której jest ukłądana kolejność przyjazdów na dane trasie. Przyjmuje wartości o 1 do n, gdzie n to ilość przystanków.",
-            "dataType": "SMALLINT",
-            "default": "1",
-            "id": "bb57abf0-421d-4dbc-9c8a-c3ba31384528",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 800,
-              "widthDataType": 64,
-              "widthDefault": 60
-            }
-          },
-          {
-            "name": "id_linia",
-            "comment": "id linii, której dotyczy przyjazd",
-            "dataType": "BIGINT",
-            "default": "",
-            "id": "f5de419d-48d7-419b-aa6b-390227272165",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 184,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "name": "id_przyst",
-            "comment": "id przystanku, którego dotyczy przyjazd",
-            "dataType": "BIGINT",
-            "default": "",
-            "id": "49f9406f-cde0-46f5-8805-5426ad78a723",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 243,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          }
-        ],
-        "id": "c363898b-971a-4f38-84ee-529e555517f1",
-        "ui": {
-          "active": true,
-          "top": 114,
-          "left": 372,
-          "widthName": 60,
-          "widthComment": 239,
-          "zIndex": 306
-        }
-      }
-    },
+    "tableFocus": null,
     "edit": null,
     "copyColumns": [],
     "columnDraggable": null
@@ -756,8 +388,8 @@
           "columnIds": [
             "8dafb284-39e8-4232-9b18-42e44589cb10"
           ],
-          "x": 335,
-          "y": 491,
+          "x": 325,
+          "y": 470,
           "direction": "top"
         },
         "end": {
@@ -779,8 +411,8 @@
           "columnIds": [
             "592bb5fc-a1ea-4c31-95b3-8796ca123169"
           ],
-          "x": 962,
-          "y": 634.0833333333334,
+          "x": 960,
+          "y": 614.0833333333334,
           "direction": "left"
         },
         "end": {
@@ -802,8 +434,8 @@
           "columnIds": [
             "592bb5fc-a1ea-4c31-95b3-8796ca123169"
           ],
-          "x": 962,
-          "y": 589.25,
+          "x": 960,
+          "y": 569.25,
           "direction": "left"
         },
         "end": {
@@ -811,8 +443,8 @@
           "columnIds": [
             "db642a7c-3af0-433b-90b8-10570ca5c14b"
           ],
-          "x": 613,
-          "y": 530.25,
+          "x": 603,
+          "y": 509.25,
           "direction": "right"
         }
       },
@@ -825,8 +457,8 @@
           "columnIds": [
             "592bb5fc-a1ea-4c31-95b3-8796ca123169"
           ],
-          "x": 962,
-          "y": 544.4166666666666,
+          "x": 960,
+          "y": 524.4166666666666,
           "direction": "left"
         },
         "end": {
@@ -834,8 +466,8 @@
           "columnIds": [
             "3a2f4def-5cd5-4d36-b14a-ef72e0369e05"
           ],
-          "x": 613,
-          "y": 608.75,
+          "x": 603,
+          "y": 587.75,
           "direction": "right"
         }
       }
