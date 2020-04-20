@@ -1,0 +1,1 @@
+/*24*/ INSERT INTO Przystanek (nazwa, NZ) VALUES ('Cracowia', '0');
