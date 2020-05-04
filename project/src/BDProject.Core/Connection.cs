@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace BDProject.Core
 {
@@ -26,7 +27,28 @@ namespace BDProject.Core
             databaseConnection.Open();
             
         }
-        public string Query(string sqlquery){
+        public ResponseAgregator Query(string sqlquery){
+            List<string> columns = new List<string>();
+            List<object[]> values = new List<object[]>();
+            SqlCommand command = new SqlCommand(sqlquery,databaseConnection);
+            using(SqlDataReader reader = command.ExecuteReader())
+            {
+                for(int i=0;i<reader.VisibleFieldCount;i++)
+                {
+                    columns.Add(reader.GetName(i));
+                }
+                while (reader.Read())
+                {
+                    object[] value = new object[columns.Count];
+                    for(int i=0;i<reader.VisibleFieldCount;i++)
+                        reader.GetSqlValues(value);
+                    values.Add(value);
+                }
+            }
+            return new ResponseAgregator(columns,values);
+        }
+
+        public string QueryString(string sqlquery){
             string result = "";
             SqlCommand command = new SqlCommand(sqlquery,databaseConnection);
             using(SqlDataReader reader = command.ExecuteReader())
@@ -45,5 +67,11 @@ namespace BDProject.Core
             }
             return result;
         }
+    }
+    public struct ResponseAgregator{
+        public ResponseAgregator(IEnumerable<string> _ColumnNames,IEnumerable<object[]> _Values) 
+        { ColumnNames = _ColumnNames; Values = _Values; }
+        public IEnumerable<string> ColumnNames;
+        public IEnumerable<object[]> Values;
     }
 }
