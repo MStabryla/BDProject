@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BDProject.Core
 {
@@ -66,6 +68,26 @@ namespace BDProject.Core
                 }
             }
             return result;
+        }
+        public void GenerateArriveRecords(DateTime starthour, long id_linia,long przyst_p,long przyst_kon)
+        {
+            ResponseAgregator listOfStops = Query(String.Format("SELECT * FROM Przystanek WHERE id >= {0} AND id <= {1}",przyst_p,przyst_kon));
+            
+            string template = "INSERT INTO Przyjazd ([kierunek], [godzina], [kolejność], [id_linia], [id_przyst]) VALUES ({0},'{1}',{2},{3},{4})";
+            for(int j=0;j<5;j++){
+                for(int i=0;i<listOfStops.Values.Count();i++){
+                    long id = ((SqlInt64)listOfStops.Values.ElementAt(i).ElementAt(0)).Value;
+                    Query(String.Format(template,0,starthour.ToString(),i + 1,id_linia,id));
+                    starthour = starthour.AddMinutes(1);
+                }
+                starthour = starthour.AddMinutes(20);
+                for(int i=listOfStops.Values.Count()-1;i>=0;i--){
+                    long id = ((SqlInt64)listOfStops.Values.ElementAt(i).ElementAt(0)).Value;
+                    Query(String.Format(template,1,starthour.ToString(),i + 1,id_linia,id));
+                    starthour = starthour.AddMinutes(1);
+                }
+                starthour = starthour.AddMinutes(20);
+            }
         }
     }
     public struct ResponseAgregator{
