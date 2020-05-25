@@ -3,7 +3,7 @@
     "width": 2000,
     "height": 2000,
     "scrollTop": 19,
-    "scrollLeft": 626,
+    "scrollLeft": 554,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -17,7 +17,7 @@
     },
     "database": "MySQL",
     "databaseName": "PlanLiniiAutobusowych",
-    "canvasType": "SQL",
+    "canvasType": "ERD",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase"
