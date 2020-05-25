@@ -1,7 +1,23 @@
-/*DROP SCHEMA IF EXISTS PlanLiniiAutobusowych;
 
-CREATE SCHEMA PlanLiniiAutobusowych DEFAULT CHARACTER SET utf8;
-USE PlanLiniiAutobusowych;*/
+        
+CREATE TABLE Autobus
+(
+  id       BIGINT  NOT NULL,
+  marka    VARCHAR NOT NULL COMMENT 'marka autobusu',
+  model    VARCHAR NOT NULL COMMENT 'konkretny model autobusu',
+  id_linia BIGINT  NOT NULL COMMENT 'id linii autobusowej',
+  PRIMARY KEY (id)
+) COMMENT 'Autobusy na trasie';
+
+CREATE TABLE Kierowca
+(
+  id_aut      BIGINT  NOT NULL,
+  imie        VARCHAR NOT NULL,
+  nazwisko    VARCHAR NOT NULL,
+  zatrudniony DATE    NOT NULL DEFAULT 1970-01-01 COMMENT 'data zatrudnienia',
+  id          bigint  NOT NULL,
+  PRIMARY KEY (id)
+) COMMENT 'Pracownicy kierujący autobusami';
 
 CREATE TABLE Linia
 (
@@ -16,7 +32,7 @@ CREATE TABLE Przyjazd
 (
   id        BIGINT   NOT NULL,
   kierunek  BOOL     NULL     DEFAULT 0 COMMENT 'jeśli 0 to przyjazd dotyczy jazdy do przystanku końcowego, a jeśli 1 to dotyczy jazdy do przystanku początkowego.',
-  godzina   TIME      NOT NULL DEFAULT 00:00:00 COMMENT 'godzina przyjazdu.',
+  godzina   tim      NOT NULL DEFAULT 00:00:00 COMMENT 'godzina przyjazdu.',
   kolejność SMALLINT NOT NULL DEFAULT 1 COMMENT 'wartość według której jest ukłądana kolejność przyjazdów na dane trasie. Przyjmuje wartości o 1 do n, gdzie n to ilość przystanków.',
   id_linia  BIGINT   NOT NULL COMMENT 'id linii, której dotyczy przyjazd',
   id_przyst BIGINT   NOT NULL COMMENT 'id przystanku, którego dotyczy przyjazd',
@@ -50,3 +66,15 @@ ALTER TABLE Linia
   ADD CONSTRAINT FK_Przystanek_TO_Linia1
     FOREIGN KEY (przyst_kon)
     REFERENCES Przystanek (id);
+
+ALTER TABLE Autobus
+  ADD CONSTRAINT FK_Linia_TO_Autobus
+    FOREIGN KEY (id_linia)
+    REFERENCES Linia (id);
+
+ALTER TABLE Kierowca
+  ADD CONSTRAINT FK_Autobus_TO_Kierowca
+    FOREIGN KEY (id_aut)
+    REFERENCES Autobus (id);
+
+      
