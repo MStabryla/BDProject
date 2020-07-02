@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Linq;
 
 namespace BDProject.Terminal
@@ -58,7 +59,32 @@ namespace BDProject.Terminal
                     Console.WriteLine(exception.Message);
                 }
             }
-            Menu(con);
+            if(args.Contains("--linq"))
+                MenuLinq(con);
+            else
+                Menu(con);
+        }
+        private static void MenuLinq(Connection con)
+        {
+            LinqQueries.Init(con);
+            Console.WriteLine("Specjalne operacje:");
+            foreach (KeyValuePair<string, string> elem in LinqQueries.menuInstruction)
+                Console.WriteLine(elem.Key + " => '" + elem.Value + "'");
+            while(true)
+            {
+                Console.Write("> ");
+                string command = Console.ReadLine();
+                IEnumerable<object> response;
+                if (LinqQueries.menuOption.ContainsKey(command))
+                {
+                    response = LinqQueries.menuOption[command](con);
+                }
+                else
+                {
+                    response = LinqQueries.Query(command);
+                }
+                Console.Write(IenumerableAgregatorToString(response));
+            }
         }
         private static void Menu(Connection con)
         {
@@ -139,6 +165,45 @@ namespace BDProject.Terminal
                 for(int i=0;i<values.Length;i++)
                 {
                     string valueStr = values[i].ToString();
+                    strResponse += "| " + valueStr + new string(' ',columnWidth[i] - valueStr.Length + 1);
+                }
+                strResponse += "|\n";
+            }
+            strResponse += new string('-',columnWidth.Sum() + columnWidth.Length*3 + 1) + "\n";
+            return strResponse;
+        }
+        private static string IenumerableAgregatorToString(IEnumerable<object> response){
+            string strResponse = "";
+            if(response.Count() <= 0)
+                return "";
+            FieldInfo[] fields = response.ElementAt(0).GetType().GetFields();
+            int[] columnWidth = new int[fields.Count()];
+            for(int i=0;i<columnWidth.Length;i++)
+            {
+                columnWidth[i] = fields.ElementAt(i).Name.Length;
+            }
+            foreach(object values in response){
+                var valueType = values.GetType();
+                for(int i=0;i<valueType.GetFields().Count();i++)
+                {
+                    if(valueType.GetField(fields[i].Name).GetValue(values).ToString().Length > columnWidth[i])
+                        columnWidth[i] = valueType.GetField(fields[i].Name).GetValue(values).ToString().Length;
+                }
+            }
+            string strColumns = new string('-',columnWidth.Sum() + columnWidth.Length*3 + 1); strColumns += '\n';
+            for(int i=0;i<columnWidth.Length;i++)
+            {
+                string columnName = fields.ElementAt(i).Name;
+                strColumns += "| " + columnName.ToUpper() + new string(' ',columnWidth[i] - columnName.Length + 1);
+            }
+            strColumns += "|\n";
+            strColumns += new string('-',columnWidth.Sum() + columnWidth.Length*3 + 1) +"\n";
+            strResponse += strColumns;
+            foreach(object values in response){
+                var valueType = values.GetType();
+                for(int i=0;i<fields.Count();i++)
+                {
+                    string valueStr = valueType.GetField(fields[i].Name).GetValue(values).ToString();
                     strResponse += "| " + valueStr + new string(' ',columnWidth[i] - valueStr.Length + 1);
                 }
                 strResponse += "|\n";
