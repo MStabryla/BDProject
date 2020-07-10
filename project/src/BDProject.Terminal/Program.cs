@@ -75,15 +75,20 @@ namespace BDProject.Terminal
                 Console.Write("> ");
                 string command = Console.ReadLine();
                 IEnumerable<object> response;
-                if (LinqQueries.menuOption.ContainsKey(command))
-                {
-                    response = LinqQueries.menuOption[command](con);
+                try{
+                    if (LinqQueries.menuOption.ContainsKey(command))
+                    {
+                        response = LinqQueries.menuOption[command](con);
+                    }
+                    else
+                    {
+                        response = LinqQueries.Query(command);
+                    }
+                    Console.Write(IenumerableAgregatorToString(response));
                 }
-                else
-                {
-                    response = LinqQueries.Query(command);
+                catch(Exception ex){
+                    Console.WriteLine(ex.Message);
                 }
-                Console.Write(IenumerableAgregatorToString(response));
             }
         }
         private static void Menu(Connection con)
@@ -138,7 +143,7 @@ namespace BDProject.Terminal
             return pass;
         }
 
-        private static string ResponseAgregatorToString(ResponseAgregator response){
+        public static string ResponseAgregatorToString(ResponseAgregator response){
             string strResponse = "";
             int[] columnWidth = new int[response.ColumnNames.Count()];
             for(int i=0;i<columnWidth.Length;i++)
@@ -172,15 +177,20 @@ namespace BDProject.Terminal
             strResponse += new string('-',columnWidth.Sum() + columnWidth.Length*3 + 1) + "\n";
             return strResponse;
         }
-        private static string IenumerableAgregatorToString(IEnumerable<object> response){
+        public static string IenumerableAgregatorToString(IEnumerable<object> response){
             string strResponse = "";
             if(response.Count() <= 0)
                 return "";
             FieldInfo[] fields = response.ElementAt(0).GetType().GetFields();
-            int[] columnWidth = new int[fields.Count()];
-            for(int i=0;i<columnWidth.Length;i++)
+            PropertyInfo[] properties = response.ElementAt(0).GetType().GetProperties();
+            int[] columnWidth = new int[fields.Count() + properties.Count()];
+            for(int i=0;i<fields.Length;i++)
             {
                 columnWidth[i] = fields.ElementAt(i).Name.Length;
+            }
+            for(int i=fields.Length;i<columnWidth.Length;i++)
+            {
+                columnWidth[i] = properties.ElementAt(i).Name.Length;
             }
             foreach(object values in response){
                 var valueType = values.GetType();
@@ -189,12 +199,22 @@ namespace BDProject.Terminal
                     if(valueType.GetField(fields[i].Name).GetValue(values).ToString().Length > columnWidth[i])
                         columnWidth[i] = valueType.GetField(fields[i].Name).GetValue(values).ToString().Length;
                 }
+                for(int i=0;i<valueType.GetProperties().Count();i++)
+                {
+                    if(valueType.GetProperty(properties[i].Name).GetValue(values).ToString().Length > columnWidth[i+fields.Count()])
+                        columnWidth[i+fields.Count()] = valueType.GetProperty(properties[i].Name).GetValue(values).ToString().Length;
+                }
             }
             string strColumns = new string('-',columnWidth.Sum() + columnWidth.Length*3 + 1); strColumns += '\n';
-            for(int i=0;i<columnWidth.Length;i++)
+            for(int i=0;i<fields.Length;i++)
             {
                 string columnName = fields.ElementAt(i).Name;
                 strColumns += "| " + columnName.ToUpper() + new string(' ',columnWidth[i] - columnName.Length + 1);
+            }
+            for(int i=0;i<properties.Length;i++)
+            {
+                string columnName = properties.ElementAt(i).Name;
+                strColumns += "| " + columnName.ToUpper() + new string(' ',columnWidth[i+fields.Length] - columnName.Length + 1);
             }
             strColumns += "|\n";
             strColumns += new string('-',columnWidth.Sum() + columnWidth.Length*3 + 1) +"\n";
@@ -204,6 +224,11 @@ namespace BDProject.Terminal
                 for(int i=0;i<fields.Count();i++)
                 {
                     string valueStr = valueType.GetField(fields[i].Name).GetValue(values).ToString();
+                    strResponse += "| " + valueStr + new string(' ',columnWidth[i] - valueStr.Length + 1);
+                }
+                for(int i=0;i<properties.Count();i++)
+                {
+                    string valueStr = valueType.GetProperty(properties[i].Name).GetValue(values).ToString();
                     strResponse += "| " + valueStr + new string(' ',columnWidth[i] - valueStr.Length + 1);
                 }
                 strResponse += "|\n";

@@ -36,59 +36,25 @@ namespace BDProject.Terminal
                 return localDatabase["Linia"].Select(x => (Linia)x).OrderBy(x => x.nr_linii);
                 }
             },
-            {"_ALL_PRZYSTANEK", (con) => {
-                return null;
-                }
-            },
             {"_LINIA", (con) => {
-                return null;
+                List<Linia> lines = localDatabase["Linia"].Select(x => (Linia)x).ToList();
+                List<Przyjazd> arrives = localDatabase["Przyjazd"].Select(x => (Przyjazd)x).ToList();
+                List<Przystanek> stops = localDatabase["Przystanek"].Select(x => (Przystanek)x).ToList();
+                Console.Write(Program.IenumerableAgregatorToString(localDatabase["Linia"]));
+                Console.Write("id linii: ");
+                string linia = Console.ReadLine();
+                var result = from l in lines 
+                    join a in arrives on l.id equals a.id_linia
+                    where l.id == Convert.ToInt64(linia) 
+                    join s in stops on a.id_przyst equals s.id
+                    select new { NrLinii = l.nr_linii, Stop = s.nazwa };
+                return result.GroupBy(x => x.Stop).Select(x => new { Nazwa = x.Key} );
                 }
-            },
-            {"_PRZYSTANEK", (con) => {
-                return null;
-                }
-            },
-            {"_ROZKLAD_PRZYSTANEK", (con) => {
-                return null;
-                }
-            },
-            {"_ROZKLAD_LINIA", (con) => {
-                return null;
-                }
-            },
-            {"_NEW_LINIA", (con) => {
-                return null;
-                }
-            },
-            {"_NEW_PRZYSTANEK", (con) => {
-                return null;
-                }
-            },
-            {"_REMOVE_LINIA", (con) => {
-                return null;
-                }
-            },
-            {"_REMOVE_PRZYSTANEK", (con) => {
-                return null;
-                }
-            },
-            {"_UPDATE_LINIA", (con) => {
-                return null;
-                }
-            },
+            }
         };
         public static Dictionary<string, string> menuInstruction = new Dictionary<string, string>(){
             {"_ALL_LINIA", "Zwraca wszystkie linie autobusowe"},
-            {"_ALL_PRZYSTANEK", "Zwraca wszystkie przystanki autobusowe"},
-            {"_LINIA", "Zwraca wszystkie przystanki, na których dana linia się zatrzymuje"},
-            {"_PRZYSTANEK", "Zwraca wszystkie linie, które zatrzymują się na danym przystanku"},
-            {"_ROZKLAD_LINIA", "Zwraca rozklad jazdy dla danej linii"},
-            {"_ROZKLAD_PRZYSTANEK", "Zwraca rozkład jazdy dla danego przystanku"},
-            {"_NEW_LINIA","Tworzy nową linię"},
-            {"_NEW_PRZYSTANEK","Tworzy nowy przystanek"},
-            {"_REMOVE_LINIA","Usuwa linię"},
-            {"_REMOVE_PRZYSTANEK","Usuwa przystanek, który nie jest początkowym i końcowym przystankiem dowolnej linii"},
-            {"_UPDATE_LINIA","Umożliwia zmianę trasy linii"}
+            {"_LINIA", "Zwraca wszystkie przystanki, na których dana linia się zatrzymuje"}
         };
 
         public static IEnumerable<object> Query(string query)
